@@ -38,5 +38,12 @@ def draw_player(screen, image, x, y):
 def draw_invader(screen, images, x, y, i):
     screen.blit(images[i], (x,y))
 
+def draw_bullet(screen, image, x, y):
+    screen.blit(image, (x,y))
+
+def show_score(screen, font, score_val, x, y):
+    score = font.render("Points:" + str(score_val), True, (255, 255, 255))
+    screen.blit(score, (x, y))
+
 
 pygame.quit()
