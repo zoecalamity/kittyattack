@@ -61,6 +61,15 @@ def main():
     # Invader state 
     invader_x, invader_y, invader_Xchange, invader_ychange = init_invaders
 
-    # Bullet state  
+    # Bullet state
+    bullet_x = 0 
+    bullet_y = 500 
+    bullet_ychange = 3
+    bullet_state = "rest"
+
+    # Score 
+    score_val = 0 
+    score_x, score_y = 5, 5 
+    
 
 pygame.quit()
