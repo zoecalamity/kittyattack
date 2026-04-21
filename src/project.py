@@ -97,5 +97,15 @@ def main():
         player_x = max(16, min(player_x, 750))
 
         # Update Invader Positions 
+        for i in range(no_of_invaders):
+            invader_x[i] += invader_Xchange[i]
+
+        # Update Bullet Position
+        if bullet_y <= 0:
+            bullet_y = 500 
+            bullet_state = "rest"
+        if bullet_state == "fire":
+            draw_bullet(screen, fish_image, bullet_x, bullet_y)
+            bullet_y -= bullet_ychange
 
 pygame.quit()
