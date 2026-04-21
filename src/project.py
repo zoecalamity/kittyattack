@@ -5,7 +5,7 @@ from pygame import mixer
 
 
 #screen size
-screen_width = 800 
+screen_width = 800
 screen_height = 600 
 screen = pygame.display.set_mode((screen_width, screen_height))
 no_of_invaders = 8 
@@ -24,9 +24,9 @@ def load_assets():
     cat_image_raw = pygame.image.load('data/aliencat.png')
 
     #Scale Images 
-    player_image = pygame.transform.scale(player_image, (64, 64))
-    fish_image = pygame.transform.scale(fish_image, (32, 32))
-    cat_image = [pygame.transform.scale(cat_image_raw, (64, 64)) for _ in range(no_of_invaders)]
+    player_image = pygame.transform.scale(player_image, (120, 120))
+    fish_image = pygame.transform.scale(fish_image, (120, 120))
+    cat_image = [pygame.transform.scale(cat_image_raw, (120, 120)) for _ in range(no_of_invaders)]
 
     return player_image, fish_image, cat_image
 
@@ -34,7 +34,7 @@ def load_assets():
 def init_invaders():
     invader_x = [random.randint(64, 737) for _ in range(no_of_invaders)]
     invader_y = [random.randint(30, 180) for _ in range(no_of_invaders)]
-    invader_xchange = [1.2] * no_of_invaders
+    invader_xchange = [0.3] * no_of_invaders
     invader_ychange = [50] * no_of_invaders
     return invader_x, invader_y, invader_xchange, invader_ychange
 
@@ -65,7 +65,7 @@ def main():
 
     # player state 
     player_x = 370 
-    player_y = 523 
+    player_y = screen_height - 130 
     player_xchange = 0 
 
     # Invader state 
@@ -98,6 +98,7 @@ def main():
                 if event.key == pygame.K_SPACE:
                     if bullet_state == "rest":
                         bullet_x = player_x
+                        bullet_y = player_y
                         bullet_state = "fire"
             
             if event.type == pygame.KEYUP:
