@@ -108,4 +108,23 @@ def main():
             draw_bullet(screen, fish_image, bullet_x, bullet_y)
             bullet_y -= bullet_ychange
 
+        # Update invaders and check collisions 
+        for i in range(no_of_invaders):
+            #Game Over Condition 
+            if invader_y[i] >= 450 and abs(player_x - invader_x[i]) < 80:
+                for j in range(no_of_invaders):
+                    invader_y[j] = 2000 
+                    show_game_over(screen, game_over_font)
+                    pygame.display.update()
+                    running = False 
+                    break 
+
+            # Bounce off Walls 
+            if invader_x[i] >= 735 or invader_x[i] <= 0:
+                invader_Xchange[i] *= -1 
+                invader_y[i] += invader_ychange[i]
+
+            #Bullet Collision 
+            
+
 pygame.quit()
