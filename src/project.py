@@ -49,4 +49,18 @@ def show_game_over(screen, font):
     text = font.render("GAME OVER!!!", True (255, 255, 255))
     screen.blit(text, (190, 250))
 
+def main():
+    screen, font, game_over_font = init_game()
+    player_image, fish_image, cat_image = load_assets()
+
+    # player state 
+    player_x = 370 
+    player_y = 523 
+    player_xchange = 0 
+
+    # Invader state 
+    invader_x, invader_y, invader_Xchange, invader_ychange = init_invaders
+
+    # Bullet state  
+
 pygame.quit()
