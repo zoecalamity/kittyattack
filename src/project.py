@@ -28,4 +28,8 @@ def init_invaders():
     invader_ychange = [50] * no_of_invaders
     return invader_x, invader_y, invader_xchange, invader_ychange
 
+def is_collision(x1, x2, y1, y2):
+    distance = math.sqrt((math.pow(x1 - x2, 2)) + (math.pow(y1, y2, 2)))
+    return distance <= 50 
+
 pygame.quit()
