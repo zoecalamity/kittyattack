@@ -45,5 +45,8 @@ def show_score(screen, font, score_val, x, y):
     score = font.render("Points:" + str(score_val), True, (255, 255, 255))
     screen.blit(score, (x, y))
 
+def show_game_over(screen, font):
+    text = font.render("GAME OVER!!!", True (255, 255, 255))
+    screen.blit(text, (190, 250))
 
 pygame.quit()
