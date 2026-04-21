@@ -70,6 +70,32 @@ def main():
     # Score 
     score_val = 0 
     score_x, score_y = 5, 5 
-    
+
+    running = True 
+    while running: 
+        screen.fill((0, 0, 0))
+
+        for event in pygame.event.get(): 
+            if event.type == pygame.QUIT: 
+                running = False 
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT:
+                    player_xchange = -1.7 
+                if event.key == pygame.K_RIGHT:
+                    player_xchange = 1.7 
+                if event.key == pygame.K_SPACE:
+                    if bullet_state == "rest":
+                        bullet_x = player_x
+                        bullet_state = "fire"
+            
+            if event.type == pygame.KEYUP:
+                player_xchange = 0 
+        
+        # Update player position 
+        player_x += player_xchange
+        player_x = max(16, min(player_x, 750))
+
+        # Update Invader Positions 
 
 pygame.quit()
