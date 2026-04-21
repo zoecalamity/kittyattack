@@ -14,12 +14,22 @@ def init_game():
     pygame.init()
     screen = pygame.display.set_mode((screen_width,screen_height))
     pygame.display.set_caption("Kitty Attack!")
+    font = pygame.font.Font('freesansbold.ttf', 20)
+    game_over_font = pygame.font.Font ('freesansbold.ttf', 64)
+    return screen, font, game_over_font
 
 def load_assets():
     player_image = pygame.image.load('data/spaceman.png')
     fish_image = pygame.image.load('data/fishbullet.png')
     cat_image = [pygame.image.load('data/aliencat.png') for _ in range(no_of_invaders)]
+
+    #Scale Images 
+    player_image = pygame.transform.scale(player_image(64, 64))
+    fish_image = pygame.transform.scale(fish_image, (32, 32))
+    cat_image = [pygame.transform.scale(cat_image, (64, 64)) for _ in range(no_of_invaders)]
+
     return player_image, fish_image, cat_image
+
 
 def init_invaders():
     invader_x = [random.randint(64, 737) for _ in range(no_of_invaders)]
@@ -29,7 +39,7 @@ def init_invaders():
     return invader_x, invader_y, invader_xchange, invader_ychange
 
 def is_collision(x1, x2, y1, y2):
-    distance = math.sqrt((math.pow(x1 - x2, 2)) + (math.pow(y1, y2, 2)))
+    distance = math.sqrt((math.pow(x1 - x2, 2)) + (math.pow(y1 - y2, 2)))
     return distance <= 50 
 
 def draw_player(screen, image, x, y):
@@ -46,7 +56,7 @@ def show_score(screen, font, score_val, x, y):
     screen.blit(score, (x, y))
 
 def show_game_over(screen, font):
-    text = font.render("GAME OVER!!!", True (255, 255, 255))
+    text = font.render("GAME OVER!!!", True, (255, 255, 255))
     screen.blit(text, (190, 250))
 
 def main():
@@ -59,13 +69,14 @@ def main():
     player_xchange = 0 
 
     # Invader state 
-    invader_x, invader_y, invader_Xchange, invader_ychange = init_invaders
+    invader_x, invader_y, invader_xchange, invader_ychange = init_invaders()
 
     # Bullet state
     bullet_x = 0 
     bullet_y = 500 
     bullet_ychange = 3
     bullet_state = "rest"
+    game_over = False 
 
     # Score 
     score_val = 0 
@@ -98,11 +109,11 @@ def main():
 
         # Update Invader Positions 
         for i in range(no_of_invaders):
-            invader_x[i] += invader_Xchange[i]
+            invader_x[i] += invader_xchange[i]
 
         # Update Bullet Position
         if bullet_y <= 0:
-            bullet_y = 500 
+            bullet_y = 600 
             bullet_state = "rest"
         if bullet_state == "fire":
             draw_bullet(screen, fish_image, bullet_x, bullet_y)
@@ -114,17 +125,39 @@ def main():
             if invader_y[i] >= 450 and abs(player_x - invader_x[i]) < 80:
                 for j in range(no_of_invaders):
                     invader_y[j] = 2000 
-                    show_game_over(screen, game_over_font)
-                    pygame.display.update()
-                    running = False 
+                    game_over = True 
                     break 
 
             # Bounce off Walls 
             if invader_x[i] >= 735 or invader_x[i] <= 0:
-                invader_Xchange[i] *= -1 
+                invader_xchange[i] *= -1 
                 invader_y[i] += invader_ychange[i]
 
             #Bullet Collision 
+            if is_collision(bullet_x, invader_x[i], bullet_y, invader_y[i]):
+                score_val += 1 
+                bullet_y = 600 
+                bullet_state = "rest"
+                invader_x[i] = random.randint(64, 736)
+                invader_y[i] = random.randint(30, 200)
+                invader_xchange[i] *= -1 
             
+            draw_invader(screen, cat_image, invader_x[i], invader_y[i], i)
 
-pygame.quit()
+        draw_player(screen, player_image, player_x, player_y)
+        show_score(screen, font, score_val, score_x, score_y)
+        
+        if game_over: 
+            show_game_over(screen, game_over_font)
+            pygame.display.update()
+            pygame.time.wait(3000)
+            running = False 
+
+        pygame.display.update()
+       
+    pygame.quit()
+
+
+if __name__ == "__main__":
+    main()
+
