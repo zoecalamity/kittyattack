@@ -35,6 +35,8 @@ def is_collision(x1, x2, y1, y2):
 def draw_player(screen, image, x, y):
     screen.blit(image, (x - 16, y + 10))
 
+def draw_invader(screen, images, x, y, i):
+    screen.blit(images[i], (x,y))
 
 
 pygame.quit()
