@@ -21,12 +21,12 @@ def init_game():
 def load_assets():
     player_image = pygame.image.load('data/spaceman.png')
     fish_image = pygame.image.load('data/fishbullet.png')
-    cat_image = [pygame.image.load('data/aliencat.png') for _ in range(no_of_invaders)]
+    cat_image_raw = pygame.image.load('data/aliencat.png')
 
     #Scale Images 
-    player_image = pygame.transform.scale(player_image(64, 64))
+    player_image = pygame.transform.scale(player_image, (64, 64))
     fish_image = pygame.transform.scale(fish_image, (32, 32))
-    cat_image = [pygame.transform.scale(cat_image, (64, 64)) for _ in range(no_of_invaders)]
+    cat_image = [pygame.transform.scale(cat_image_raw, (64, 64)) for _ in range(no_of_invaders)]
 
     return player_image, fish_image, cat_image
 
