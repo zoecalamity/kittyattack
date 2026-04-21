@@ -32,4 +32,9 @@ def is_collision(x1, x2, y1, y2):
     distance = math.sqrt((math.pow(x1 - x2, 2)) + (math.pow(y1, y2, 2)))
     return distance <= 50 
 
+def draw_player(screen, image, x, y):
+    screen.blit(image, (x - 16, y + 10))
+
+
+
 pygame.quit()
