@@ -59,6 +59,10 @@ def show_game_over(screen, font):
     text = font.render("GAME OVER!!!", True, (255, 255, 255))
     screen.blit(text, (190, 250))
 
+def show_win(screen, font):
+    text = font.render("YOU WIN!!!", True, (255, 255, 0))
+    screen.blit(text, (240, 250)) 
+
 def main():
     screen, font, game_over_font = init_game()
     player_image, fish_image, cat_image = load_assets()
@@ -77,6 +81,7 @@ def main():
     bullet_ychange = 3
     bullet_state = "rest"
     game_over = False 
+    game_win = False 
 
     # Score 
     score_val = 0 
@@ -137,6 +142,9 @@ def main():
             #Bullet Collision 
             if is_collision(bullet_x, invader_x[i], bullet_y, invader_y[i]):
                 score_val += 1 
+                if score_val >= 25:
+                    game_win = True 
+                    break 
                 bullet_y = 600 
                 bullet_state = "rest"
                 invader_x[i] = random.randint(64, 736)
@@ -150,6 +158,12 @@ def main():
         
         if game_over: 
             show_game_over(screen, game_over_font)
+            pygame.display.update()
+            pygame.time.wait(3000)
+            running = False 
+
+        if game_win: 
+            show_win(screen, game_over_font)
             pygame.display.update()
             pygame.time.wait(3000)
             running = False 
